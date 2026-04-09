@@ -1,0 +1,32 @@
+import { NextResponse } from 'next/server';
+import { updateCoreTeamMember } from '../../../../../api/admin';
+
+type RouteContext = {
+	params: Promise<{ id: string }>;
+};
+
+export async function PATCH(request: Request, context: RouteContext) {
+	try {
+		const { id } = await context.params;
+		const payload = await request.json();
+		const result = await updateCoreTeamMember(id, payload);
+
+		if (!result.success) {
+			return NextResponse.json(
+				{ success: false, message: result.message },
+				{ status: 400 }
+			);
+		}
+
+		return NextResponse.json({
+			success: true,
+			message: result.message,
+			data: result.data,
+		});
+	} catch {
+		return NextResponse.json(
+			{ success: false, message: 'Invalid request payload' },
+			{ status: 400 }
+		);
+	}
+}
