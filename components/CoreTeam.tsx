@@ -15,6 +15,8 @@ type CoreTeamProps = {
 };
 
 export default function CoreTeam({ teamMembers, pastMembers = [] }: CoreTeamProps) {
+  const hasTeamMembers = teamMembers.length > 0;
+
   return (
     <section id="team" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
       <div className="max-w-6xl mx-auto">
@@ -27,26 +29,32 @@ export default function CoreTeam({ teamMembers, pastMembers = [] }: CoreTeamProp
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member) => (
-            <Card
-              key={member.id}
-              className="overflow-hidden border border-border hover:shadow-xl transition-all hover:-translate-y-1"
-            >
-              <div className="relative h-64 overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
-                <img
-                  src={member.photo || "/placeholder.svg"}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold text-foreground mb-2">{member.name}</h3>
-                <p className="text-sm text-primary font-semibold">{member.designation}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {hasTeamMembers ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {teamMembers.map((member) => (
+              <Card
+                key={member.id}
+                className="overflow-hidden border border-border hover:shadow-xl transition-all hover:-translate-y-1"
+              >
+                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
+                  <img
+                    src={member.photo || "/placeholder.svg"}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-xl font-bold text-foreground mb-2">{member.name}</h3>
+                  <p className="text-sm text-primary font-semibold">{member.designation}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <Card className="p-8 text-center border border-border">
+            <p className="text-muted-foreground">Core team details are not available right now.</p>
+          </Card>
+        )}
 
         {pastMembers.length > 0 && (
           <div className="mt-20 pt-20 border-t border-border">

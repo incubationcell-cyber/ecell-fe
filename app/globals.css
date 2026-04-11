@@ -130,3 +130,25 @@ nextjs-portal [data-nextjs-dev-tools-button],
 nextjs-portal [data-next-badge-root] {
   display: none !important;
 }
+
+.banner-marquee-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: banner-marquee-scroll 45s linear infinite;
+  will-change: transform;
+}
+
+.banner-marquee-item {
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+@keyframes banner-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

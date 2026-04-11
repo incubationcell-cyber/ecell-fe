@@ -1,13 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
-
 const bannerSlides = [
   { id: 1, image: '/Banner1.jpeg', alt: 'E-Cell banner 1' },
   { id: 2, image: '/Banner2.jpeg', alt: 'E-Cell banner 2' },
@@ -21,31 +13,17 @@ const bannerSlides = [
 ];
 
 export default function Banner() {
+  const marqueeSlides = [...bannerSlides, ...bannerSlides];
+
   return (
-    <section id="home" className="relative w-full h-[72vh] min-h-[520px] pt-16 overflow-hidden">
-      <Swiper
-        modules={[Autoplay, Navigation, Pagination, EffectFade]}
-        effect="fade"
-        autoplay={{ delay: 5000 }}
-        pagination={{ clickable: true }}
-        navigation={true}
-        loop={true}
-        className="w-full h-full"
-      >
-        {bannerSlides.map((slide) => (
-          <SwiperSlide key={slide.id} className="relative !flex items-center justify-center">
-            <div className="absolute inset-0 bg-black/20" />
-            <Image
-              src={slide.image}
-              alt={slide.alt}
-              fill
-              priority={slide.id === 1}
-              sizes="100vw"
-              className="object-cover"
-            />
-          </SwiperSlide>
+    <section id="home" className="relative w-full h-[72vh] min-h-[520px] pt-16 overflow-hidden bg-black">
+      <div className="banner-marquee-track">
+        {marqueeSlides.map((slide, index) => (
+          <div key={`${slide.id}-${index}`} className="banner-marquee-item">
+            <img src={slide.image} alt={slide.alt} className="h-full w-auto object-contain" loading="lazy" />
+          </div>
         ))}
-      </Swiper>
+      </div>
     </section>
   );
 }

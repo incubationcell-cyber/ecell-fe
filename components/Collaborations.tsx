@@ -53,6 +53,8 @@ type CollaborationsProps = {
 export default function Collaborations({
   collaborations = defaultCollaborations,
 }: CollaborationsProps) {
+  const hasCollaborations = collaborations.length > 0;
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
       <div className="max-w-6xl mx-auto">
@@ -65,56 +67,62 @@ export default function Collaborations({
           </p>
         </div>
 
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
-          navigation={true}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
-          loop={true}
-          breakpoints={{
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 2,
-              spaceBetween: 30,
-            },
-          }}
-          className="collaborations-swiper"
-        >
-          {collaborations.map((collab) => (
-            <SwiperSlide key={collab.id}>
-              <Card className="overflow-hidden border border-border h-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 h-full">
-                  {/* Left: Image */}
-                  <div className="relative h-64 md:h-auto overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
-                    <img
-                      src={collab.image || "/placeholder.svg"}
-                      alt={collab.organization}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+        {hasCollaborations ? (
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            navigation={true}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000 }}
+            loop={true}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+            }}
+            className="collaborations-swiper"
+          >
+            {collaborations.map((collab) => (
+              <SwiperSlide key={collab.id}>
+                <Card className="overflow-hidden border border-border h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+                    {/* Left: Image */}
+                    <div className="relative h-64 md:h-auto overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+                      <img
+                        src={collab.image || "/placeholder.svg"}
+                        alt={collab.organization}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
 
-                  {/* Right: Content */}
-                  <div className="p-6 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-3">
-                        {collab.organization}
-                      </h3>
-                      <p className="text-muted-foreground mb-4">{collab.description}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-primary">
-                        {collab.events}
-                      </p>
+                    {/* Right: Content */}
+                    <div className="p-6 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold text-foreground mb-3">
+                          {collab.organization}
+                        </h3>
+                        <p className="text-muted-foreground mb-4">{collab.description}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-primary">
+                          {collab.events}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <Card className="p-8 text-center border border-border">
+            <p className="text-muted-foreground">No collaborations available right now. Please check back soon.</p>
+          </Card>
+        )}
       </div>
     </section>
   );

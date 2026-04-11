@@ -55,6 +55,7 @@ export default function UpcomingEvents({
   events = defaultEvents,
   successfulEvents = [],
 }: UpcomingEventsProps) {
+  const hasUpcomingEvents = events.length > 0;
   const hasSuccessfulEvents = successfulEvents.length > 0;
 
   return (
@@ -69,46 +70,52 @@ export default function UpcomingEvents({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
-            <Card key={event.id} className="overflow-hidden border border-border hover:shadow-lg transition-shadow">
-              <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-                {event.image ? (
-                  <Image
-                    src={event.image}
-                    alt={event.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover object-center"
-                  />
-                ) : null}
-              </div>
-              <div className="p-6 space-y-3">
-                <div className="inline-flex bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full w-fit">
-                  {event.category}
+        {hasUpcomingEvents ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {events.map((event) => (
+              <Card key={event.id} className="overflow-hidden border border-border hover:shadow-lg transition-shadow">
+                <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+                  {event.image ? (
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-center"
+                    />
+                  ) : null}
                 </div>
-                <h3 className="text-xl font-bold text-foreground">{event.title}</h3>
-                <p className="text-muted-foreground">
-                  Speaker: {event.speaker || event.description || 'TBA'}
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    <span>{event.date}</span>
+                <div className="p-6 space-y-3">
+                  <div className="inline-flex bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full w-fit">
+                    {event.category}
                   </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Clock className="w-4 h-4 text-primary" />
-                    <span>{event.time}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    <span>{event.location}</span>
+                  <h3 className="text-xl font-bold text-foreground">{event.title}</h3>
+                  <p className="text-muted-foreground">
+                    Speaker: {event.speaker || event.description || 'TBA'}
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Calendar className="w-4 h-4 text-primary" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Clock className="w-4 h-4 text-primary" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <MapPin className="w-4 h-4 text-primary" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <Card className="p-8 text-center border border-border">
+            <p className="text-muted-foreground">No upcoming events available right now. Please check back soon.</p>
+          </Card>
+        )}
 
         {hasSuccessfulEvents && (
           <div className="mt-20">

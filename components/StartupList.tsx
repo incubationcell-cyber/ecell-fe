@@ -27,7 +27,7 @@ export default function StartupList({ startups = [] }: StartupListProps) {
 
         {startups.length === 0 ? (
           <Card className="p-8 text-center border border-border">
-            <p className="text-muted-foreground">No startups available right now.</p>
+            <p className="text-muted-foreground">No startups available right now. Please check back soon.</p>
           </Card>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
