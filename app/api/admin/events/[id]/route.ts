@@ -30,3 +30,23 @@ export async function PATCH(request: Request, context: RouteContext) {
 		);
 	}
 }
+
+export async function DELETE(request: Request, context: RouteContext) {
+	try {
+		const { id } = await context.params;
+		const { deleteUpcomingEvent } = await import('../../../../../api/admin');
+
+		const result = await deleteUpcomingEvent(id);
+
+		if (!result.success) {
+			return NextResponse.json({ success: false, message: result.message }, { status: 400 });
+		}
+
+		return NextResponse.json({ success: true, message: result.message });
+	} catch (error) {
+		return NextResponse.json(
+			{ success: false, message: 'Failed to delete upcoming event' },
+			{ status: 500 }
+		);
+	}
+}

@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../../../components/ui/dialog';
-import { PenSquare, Plus } from 'lucide-react';
+import { PenSquare, Plus, Trash } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 type EventItem = {
@@ -124,6 +124,30 @@ export default function EventsManagement() {
     });
     setIsEditing(true);
     setOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!id) return;
+    const ok = window.confirm('Are you sure you want to delete this event?');
+    if (!ok) return;
+
+    try {
+      const response = await fetch(`/api/admin/events/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.message || 'Failed to delete event');
+      }
+
+      await loadEvents();
+      toast.success(result?.message || 'Event deleted');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Delete failed');
+    }
   };
 
   const handleSubmit = async () => {
@@ -318,14 +342,25 @@ export default function EventsManagement() {
                 <h3 className="text-xl font-bold text-foreground mb-2">{event.title}</h3>
                 <p className="text-sm text-muted-foreground">Speaker: {event.speaker || 'TBA'}</p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleEdit(event)}
-                className="border-border text-foreground hover:bg-muted"
-              >
-                <PenSquare className="w-4 h-4" />
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleEdit(event)}
+                  className="border-border text-foreground hover:bg-muted"
+                >
+                  <PenSquare className="w-4 h-4" />
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleDelete(event.id)}
+                  className="border-border text-destructive hover:bg-muted"
+                >
+                  <Trash className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
 
             <div className="w-full h-52 rounded-lg overflow-hidden mb-4 bg-gradient-to-br from-primary/10 to-secondary/10">

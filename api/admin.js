@@ -428,6 +428,36 @@ export async function updateUpcomingEvent(eventId, eventData) {
 	}
 }
 
+export async function deleteUpcomingEvent(eventId) {
+	if (!eventId) {
+		return {
+			success: false,
+			message: 'Event id is required',
+			data: null,
+		};
+	}
+
+	try {
+		const response = await adminRequest(`/admin/upcomingevent/${eventId}`, {
+			method: 'DELETE',
+		});
+
+		const payload = await parseAdminJson(response, 'Failed to delete upcoming event');
+
+		return {
+			success: true,
+			message: payload?.message || 'Upcoming event deleted successfully',
+			data: null,
+		};
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.message || 'Failed to delete upcoming event',
+			data: null,
+		};
+	}
+}
+
 export async function getCoreTeamMembersAdmin() {
 	try {
 		const response = await adminRequest('/member/coreTeam', {
