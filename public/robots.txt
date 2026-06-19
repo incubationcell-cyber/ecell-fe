@@ -1,3 +1,20 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /*.json$
+
+# Allow Google, Bing, and other search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Specify sitemap location
 Sitemap: https://e-cell.jeckukas.org.in/sitemap.xml
+Sitemap: https://e-cell.jeckukas.org.in/sitemap-0.xml
+
+# Crawl delay (optional - only for aggressive crawlers)
+Crawl-delay: 0
