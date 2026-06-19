@@ -26,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content="CHm660O3L2Ar1nbD5zQ7QuWNgPffwTYREWU5lfnwKJ0" />
+      </head>
       <body className={`font-sans antialiased`}>
         {children}
         <ToastProvider />
