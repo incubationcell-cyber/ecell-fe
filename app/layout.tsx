@@ -19,6 +19,14 @@ export const metadata: Metadata = {
   },
 }
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "E-Cell | Jaipur Engineering College",
+  "url": "https://e-cell.jeckukas.org.in",
+  "logo": "https://e-cell.jeckukas.org.in/logo.jpeg"
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +36,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="CHm660O3L2Ar1nbD5zQ7QuWNgPffwTYREWU5lfnwKJ0" />
+        <meta property="og:title" content="E-Cell | Jaipur Engineering College" />
+        <meta property="og:description" content="Entrepreneurship Cell - Fostering innovation and growth at Jaipur Engineering College" />
+        <meta property="og:image" content="https://e-cell.jeckukas.org.in/logo.jpeg" />
+        <meta property="og:url" content="https://e-cell.jeckukas.org.in/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://e-cell.jeckukas.org.in/" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       </head>
       <body className={`font-sans antialiased`}>
         {children}
