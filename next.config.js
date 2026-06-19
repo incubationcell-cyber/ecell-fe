@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   
   // Image optimization for performance
   images: {
@@ -42,19 +41,15 @@ const nextConfig = {
     ];
   },
 
-  // Redirects for SEO (preserve old URLs if migrated)
+  // Redirects for SEO
   async redirects() {
-    return [
-      // Add any legacy URL redirects here
-    ];
+    return [];
   },
 
   // Rewrites for URL optimization
   async rewrites() {
     return {
-      beforeFiles: [
-        // Add any rewrites here if needed
-      ],
+      beforeFiles: [],
     };
   },
 
@@ -63,7 +58,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // Power up SEO with next-sitemap
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
 
